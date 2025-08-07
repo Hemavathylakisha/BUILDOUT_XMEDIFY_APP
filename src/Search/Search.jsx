@@ -3,8 +3,10 @@ import { useSearchParams } from "react-router-dom";
 import { fetchMedicalCenters } from "../utils/api";
 import HospitalCard from "../components/HospitalCard/HospitalCard";
 import SearchBar from "../components/SearchBar/SearchBar";
+import FAQs from "../components/Sections/FAQs/FAQs";
+import DownloadApp from "../Components/Sections/DownloadApp/DownloadApp";
 
-const SearchResults = () => {
+const Search = () => {
   const [params] = useSearchParams();
   const [centers, setCenters] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,8 +30,10 @@ const SearchResults = () => {
         centers.map(center => <HospitalCard key={center.id} data={center} />)
       )}
     </div>
+    <FAQs />
+    <DownloadApp />
     </>
   );
 };
 
-export default SearchResults;
+export default Search;
