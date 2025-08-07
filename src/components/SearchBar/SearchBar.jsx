@@ -1,64 +1,41 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { fetchStates, fetchCities } from "../../utils/api";
+import { useNavigate } from "react-router-dom";
+// import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// Importing images
-import doctorImg from "../../assets/Doctor.jpg";
-import labImg from "../../assets/Drugstore.jpg";
-import hospitalImg from "../../assets/Hospital.jpg";
-import storeImg from "../../assets/Capsule.jpg";
-import ambulanceImg from "../../assets/Ambulance.jpg";
 
-const SearchBar = ({ onSearch }) => {
-  const [states, setStates] = useState([]);
+const SearchBar = () => {
+ const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const services = [
-    { img: doctorImg, label: "Doctors" },
-    { img: labImg, label: "Labs" },
-    { img: hospitalImg, label: "Hospitals", active: true },
-    { img: storeImg, label: "Medical Store" },
-    { img: ambulanceImg, label: "Ambulance" },
-  ];
+ 
 
-  // Fetch states on load
   useEffect(() => {
-    axios.get("https://meddata-backend.onrender.com/states")
-      .then(res => setStates(res.data))
-      .catch(err => console.error("Error fetching states:", err));
+    fetchStates().then(setStates);
   }, []);
 
-  // Fetch cities when state changes
   useEffect(() => {
     if (selectedState) {
-      axios.get(`https://meddata-backend.onrender.com/cities/${selectedState}`)
-        .then(res => setCities(res.data))
-        .catch(err => console.error("Error fetching cities:", err));
-    } else {
-      setCities([]);
+      fetchCities(selectedState).then(setCities);
     }
   }, [selectedState]);
 
-  const handleSearch = async () => {
-    if (!selectedState || !selectedCity) return;
+  const handleSearch = () => {
+  if (selectedState && selectedCity) {
+    setLoading(true); // Start loading
 
-    setLoading(true);
-    try {
-      const res = await axios.get(
-        `https://meddata-backend.onrender.com/data?state=${selectedState}&city=${selectedCity}`
-      );
-      if (onSearch) {
-        onSearch(res.data, selectedCity); // Pass data to parent
-      }
-    } catch (err) {
-      console.error("Error fetching hospitals:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    // Simulate async delay (if you want to show the loading state briefly)
+    setTimeout(() => {
+      navigate(`/search?state=${selectedState}&city=${selectedCity}`);
+      setLoading(false); // Stop loading after navigation
+    }, 1000); // Optional: slight delay to visualize the loading
+  }
+};
 
   return (
     <div  className="container">
@@ -74,16 +51,10 @@ const SearchBar = ({ onSearch }) => {
               <span className="input-group-text">
                 <i className="bi bi-geo-alt"></i>
               </span>
-              <select
-                className="form-select"
-                value={selectedState}
-                onChange={(e) => setSelectedState(e.target.value)}
-              >
-                <option value="">Select State</option>
-                {states.map((state, i) => (
-                  <option key={i} value={state}>{state}</option>
-                ))}
-              </select>
+               <select value={selectedState} onChange={e => setSelectedState(e.target.value)}>
+            <option>Select State</option>
+            {states.map(state => <option key={state}>{state}</option>)}
+          </select>
             </div>
           </div>
 
@@ -93,16 +64,10 @@ const SearchBar = ({ onSearch }) => {
               <span className="input-group-text">
                 <i className="bi bi-building"></i>
               </span>
-              <select
-                className="form-select"
-                value={selectedCity}
-                onChange={(e) => setSelectedCity(e.target.value)}
-              >
-                <option value="">Select City</option>
-                {cities.map((city, i) => (
-                  <option key={i} value={city}>{city}</option>
-                ))}
-              </select>
+               <select value={selectedCity} onChange={e => setSelectedCity(e.target.value)} disabled={!selectedState}>
+            <option>Select City</option>
+            {cities.map(city => <option key={city}>{city}</option>)}
+          </select>
             </div>
           </div>
 
@@ -120,29 +85,7 @@ const SearchBar = ({ onSearch }) => {
           </div>
         </div>
 
-        {/* Services */}
-        <div className="text-center mt-5">
-          <h5 className="mb-4 fw-semibold">You may be looking for</h5>
-          <div className="row justify-content-center g-4">
-            {services.map((item, idx) => (
-              <div key={idx} className="col-6 col-sm-4 col-md-2">
-                <div
-                  className={`p-3 rounded text-center shadow-sm ${
-                    item.active ? "border-primary border-2 border" : "border"
-                  }`}
-                  style={{ cursor: "pointer", backgroundColor: "#F8FAFF" }}
-                >
-                  <img
-                    src={item.img}
-                    alt={item.label}
-                    style={{ width: "40px", height: "40px" }}
-                  />
-                  <div className="mt-2 fw-medium">{item.label}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+       
       </div>
     </div>
   );

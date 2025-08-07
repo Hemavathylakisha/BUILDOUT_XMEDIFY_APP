@@ -4,6 +4,23 @@ import heroImage from "../assets/hero_image.png";
 import SearchBar from "../components/SearchBar/SearchBar";
 import HeroSlider from "../components/HeroSlider/Heroslider";
 
+
+// Importing images
+import doctorImg from "../assets/Doctor.jpg";
+import labImg from "../assets/Drugstore.jpg";
+import hospitalImg from "../assets/Hospital.jpg";
+import storeImg from "../assets/Capsule.jpg";
+import ambulanceImg from "../assets/Ambulance.jpg";
+
+ const services = [
+    { img: doctorImg, label: "Doctors" },
+    { img: labImg, label: "Labs" },
+    { img: hospitalImg, label: "Hospitals", active: true },
+    { img: storeImg, label: "Medical Store" },
+    { img: ambulanceImg, label: "Ambulance" },
+  ];
+
+
 const Home = () => {
   return (
    <>
@@ -44,7 +61,29 @@ const Home = () => {
         </div>
       </div>
       <SearchBar />
-     
+      {/* Services */}
+        <div className="text-center mt-5">
+          <h5 className="mb-4 fw-semibold">You may be looking for</h5>
+          <div className="row justify-content-center g-4">
+            {services.map((item, idx) => (
+              <div key={idx} className="col-6 col-sm-4 col-md-2">
+                <div
+                  className={`p-3 rounded text-center shadow-sm ${
+                    item.active ? "border-primary border-2 border" : "border"
+                  }`}
+                  style={{ cursor: "pointer", backgroundColor: "#F8FAFF" }}
+                >
+                  <img
+                    src={item.img}
+                    alt={item.label}
+                    style={{ width: "40px", height: "40px" }}
+                  />
+                  <div className="mt-2 fw-medium">{item.label}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
     </div>
      <HeroSlider />
     </>
