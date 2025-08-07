@@ -2,15 +2,15 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import heroImage from "../assets/hero_image.png";
 import SearchBar from "../components/SearchBar/SearchBar";
+import HeroSlider from "../components/HeroSlider/Heroslider";
 
 const Home = () => {
   return (
-   
+   <>
     <div
       className="container-fluid py-5"
       style={{
         background: "linear-gradient(135deg, #E7F0FF, #E8F1FF78)",
-        minHeight: "100vh",
       }}
     >
        
@@ -44,7 +44,10 @@ const Home = () => {
         </div>
       </div>
       <SearchBar />
+     
     </div>
+     <HeroSlider />
+    </>
   );
 };
 
