@@ -1,0 +1,44 @@
+
+.navbar ul{
+    list-style: none;
+}
+.navbar {
+  background-color: #E7F0FF;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.logo {
+  height: 50px;
+  object-fit: contain;
+}
+
+.navLinks {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  justify-content: center;
+}
+
+.navLinks li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navLinks li a:hover {
+  color: #2AA7FF;
+}
+.bookingbutton{
+    background:#2AA7FF;
+  color: white !important;
+  padding: 10px 12px;
+  border-radius: 4px;
+  margin-left: 10px;
+  text-align: center;
+  text-decoration: none;
+}
