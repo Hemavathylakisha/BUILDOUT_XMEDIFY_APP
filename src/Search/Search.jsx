@@ -4,7 +4,7 @@ import { fetchMedicalCenters } from "../utils/api";
 import HospitalCard from "../components/HospitalCard/HospitalCard";
 import SearchBar from "../components/SearchBar/SearchBar";
 import FAQs from "../components/Sections/FAQs/FAQs";
-import DownloadApp from "../Components/Sections/DownloadApp/DownloadApp";
+import DownloadApp from "../components/Sections/DownloadApp/DownloadApp";
 
 const Search = () => {
   const [params] = useSearchParams();
