@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { fetchStates, fetchCities } from "../../Utils/Api";
+import { fetchStates, fetchCities } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
