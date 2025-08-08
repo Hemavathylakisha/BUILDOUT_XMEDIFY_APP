@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const MyBookings = () => {
-  const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+  const [bookings,setBookings] = useState([]);
+
+  useEffect(() => {
+  const saved = JSON.parse(localStorage.getItem("bookings")) || [];
+  setBookings(saved);
+}, []);
 
   return (
     <div className="container my-4">
