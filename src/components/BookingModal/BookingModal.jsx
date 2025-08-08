@@ -14,24 +14,30 @@ const BookingModal = ({ show, onHide, center }) => {
   }, [show]);
 
   const handleBook = () => {
-    if (!center) {
-      alert("No hospital selected!");
-      return;
-    }
-    if (!date || !time) {
-      alert("Please select date and time");
-      return;
-    }
-    const booking = {
-      center,
-      bookingDate: date,
-      bookingTime: time,
-    };
-    const existing = JSON.parse(localStorage.getItem("bookings")) || [];
-    localStorage.setItem("bookings", JSON.stringify([...existing, booking]));
-    alert("Appointment Booked!");
-    onHide();
+  if (!center) {
+    alert("No hospital selected!");
+    return;
+  }
+  if (!date || !time) {
+    alert("Please select date and time");
+    return;
+  }
+
+  const booking = {
+    "Hospital Name": center["Hospital Name"] || center.name || "Unknown Hospital",
+    "Address": center.Address || center.address || "",
+    "City": center.City || center.city || "",
+    "State": center.State || center.state || "",
+    bookingDate: date,
+    bookingTime: time,
   };
+
+  const existing = JSON.parse(localStorage.getItem("bookings")) || [];
+  localStorage.setItem("bookings", JSON.stringify([...existing, booking]));
+
+  alert("Appointment Booked!");
+  onHide();
+};
 
   const today = new Date().toISOString().split("T")[0];
   const maxDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
