@@ -21,17 +21,26 @@ const Search = () => {
   //   });
   // }, [state, city]);
 
-  useEffect(() => {
-  if (!state || !city) {
-    setCenters([]);
-    setLoading(false);
-    return;
+//   useEffect(() => {
+//   if (!state || !city) {
+//     setCenters([]);
+//     setLoading(false);
+//     return;
+//   }
+//   setLoading(true);
+//   fetchMedicalCenters(state, city).then(data => {
+//     setCenters(data);
+//     setLoading(false);
+//   });
+// }, [state, city]);
+
+useEffect(() => {
+  if (state && city) {
+    fetchMedicalCenters(state, city)
+      .then(data => setCenters(data))
+      .catch(console.error);
+      setLoading(false);
   }
-  setLoading(true);
-  fetchMedicalCenters(state, city).then(data => {
-    setCenters(data);
-    setLoading(false);
-  });
 }, [state, city]);
 
   return (
