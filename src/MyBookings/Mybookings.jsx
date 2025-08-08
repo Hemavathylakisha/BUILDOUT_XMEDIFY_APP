@@ -5,7 +5,7 @@ const MyBookings = () => {
 
   return (
     <div className="container my-4">
-      <h3>My Bookings</h3>
+      <h1>My Bookings</h1>
       {bookings.length === 0 ? <p>No bookings yet.</p> : bookings.map((b, i) => (
         <div key={i} className="border p-3 mb-3 rounded">
           <h5>{b.center["Hospital Name"]}</h5>

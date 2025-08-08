@@ -44,13 +44,14 @@ const SearchBar = () => {
                 <i className="bi bi-geo-alt"></i>
               </span>
               <select
+              data-testid="state-dropdown"
                 className="form-select"
                 value={selectedState}
                 onChange={(e) => setSelectedState(e.target.value)}
               >
                 <option value="">Select State</option>
                 {states.map((state) => (
-                  <option key={state}>{state}</option>
+                  <option key={state} value={state}>{state}</option>
                 ))}
               </select>
             </div>
@@ -63,6 +64,7 @@ const SearchBar = () => {
                 <i className="bi bi-building"></i>
               </span>
               <select
+              data-testid="city-dropdown"
                 className="form-select"
                 value={selectedCity}
                 onChange={(e) => setSelectedCity(e.target.value)}
@@ -70,7 +72,7 @@ const SearchBar = () => {
               >
                 <option value="">Select City</option>
                 {cities.map((city) => (
-                  <option key={city}>{city}</option>
+                  <option key={city} value={city}>{city}</option>
                 ))}
               </select>
             </div>
