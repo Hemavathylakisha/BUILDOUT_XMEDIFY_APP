@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { fetchMedicalCenters } from "../Utils/Api";
-import HospitalCard from "../Components/HospitalCard/HospitalCard";
-import SearchBar from "../Components/SearchBar/SearchBar";
-import FAQs from "../Components/Sections/FAQs/FAQs";
-import DownloadApp from "../Components/Sections/DownloadApp/DownloadApp";
+import { fetchMedicalCenters } from "../utils/api";
+import HospitalCard from "../components/HospitalCard/HospitalCard";
+import SearchBar from "../components/SearchBar/SearchBar";
+import FAQs from "../components/Sections/FAQs/FAQs";
+import DownloadApp from "../components/Sections/DownloadApp/DownloadApp";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const Search = () => {
