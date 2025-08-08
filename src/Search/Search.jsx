@@ -24,7 +24,7 @@ const Search = () => {
   return (
     <>
     <SearchBar />
-    <div className="container my-4">
+    <div className="row" data-testid="hospital-list">
       {!loading && centers.length === 0 && (
   <p className="text-muted">No medical centers found for {city}, {state}.</p>
 )}
@@ -33,6 +33,7 @@ const Search = () => {
         centers.map(center => <HospitalCard key={center.id} data={center} />)
       )}
     </div>
+   
     <FAQs />
     <DownloadApp />
     </>
