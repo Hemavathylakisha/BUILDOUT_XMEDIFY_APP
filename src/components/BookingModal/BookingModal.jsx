@@ -27,22 +27,23 @@ const BookingModal = ({ show, onHide, center }) => {
         <Form>
           <Form.Group>
             <Form.Label>Select Date</Form.Label>
-            <Form.Control type="date" onChange={(e) => setDate(e.target.value)} />
+            <Form.Control type="date" onChange={(e) => setDate(e.target.value)} data-testid="date-input" value={date}/>
           </Form.Group>
           <Form.Group className="mt-3">
             <Form.Label>Select Time</Form.Label>
-            <Form.Select onChange={(e) => setTime(e.target.value)}>
-              <option>Choose...</option>
-              <option>10:00 AM</option>
-              <option>12:00 PM</option>
-              <option>03:00 PM</option>
-              <option>05:00 PM</option>
+            <Form.Select onChange={(e) => setTime(e.target.value)} value={time} data-testid="time-select">
+             <option value="">Choose...</option>
+              <option value="10:00 AM">10:00 AM</option>
+              <option value="12:00 PM">12:00 PM</option>
+              <option value="03:00 PM">03:00 PM</option>
+              <option value="05:00 PM">05:00 PM</option>
             </Form.Select>
           </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={handleBook} disabled={!date || !time}>Book</Button>
+        <Button onClick={handleBook} disabled={!date || !time}
+         data-testid="confirm-booking-btn">Book</Button>
       </Modal.Footer>
     </Modal>
   );

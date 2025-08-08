@@ -16,7 +16,7 @@ function HospitalCard({ data }) {
           <Card.Text>
             <strong>Rating:</strong> {data["Overall Rating"] || "N/A"}
           </Card.Text>
-          <Button variant="primary" onClick={() => setShow(true)}>
+          <Button variant="primary" onClick={() => setShow(true)} data-testid="book-visit-btn"> 
             Book FREE Center Visit
           </Button>
         </Card.Body>
@@ -26,7 +26,7 @@ function HospitalCard({ data }) {
       <BookingModal
         show={show}
         onHide={() => setShow(false)}
-        center={data}
+        center={data} data-testid="booking-modal"
       />
     </Col>
   );
