@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { fetchMedicalCenters } from "../utils/api";
-import HospitalCard from "../components/HospitalCard/HospitalCard";
-import SearchBar from "../components/SearchBar/SearchBar";
-import FAQs from "../components/Sections/FAQs/FAQs";
-import DownloadApp from "../components/Sections/DownloadApp/DownloadApp";
+import { fetchMedicalCenters } from "../Utils/Api";
+import HospitalCard from "../Components/HospitalCard/HospitalCard";
+import SearchBar from "../Components/SearchBar/SearchBar";
+import FAQs from "../Components/Sections/FAQs/FAQs";
+import DownloadApp from "../Components/Sections/DownloadApp/DownloadApp";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const Search = () => {
   const [params] = useSearchParams();
@@ -15,43 +16,52 @@ const Search = () => {
   const city = params.get("city");
 
   useEffect(() => {
-  if (!state || !city) {
-    setCenters([]);
-    setLoading(false);
-    return;
-  }
-  setLoading(true);
-  fetchMedicalCenters(state, city).then(data => {
-    setCenters(data);
-    setLoading(false);
-  });
-}, [state, city]);
-
-// useEffect(() => {
-//   if (state && city) {
-//     fetchMedicalCenters(state, city)
-//       .then(data => setCenters(data))
-//       .catch(console.error);
-//       setLoading(false);
-//   }
-// }, [state, city]);
+    if (state && city) {
+      setLoading(true);
+      fetchMedicalCenters(state, city).then((data) => {
+        setCenters(data);
+        setLoading(false);
+      });
+    } else {
+      setLoading(false);
+    }
+  }, [state, city]);
 
   return (
     <>
-    <SearchBar />
-    
-    <div className="container" data-testid="hospital-list">
-      {!loading && centers.length === 0 && (
-  <p className="text-muted">No medical centers found for {city}, {state}.</p>
-)}
-      {/* <h4>{centers.length} medical centers available in {state}</h4> */}
-      {loading ? <p>Loading...</p> : (
-        centers.map(center => <HospitalCard key={center.id} data={center} />)
-      )}
-    </div>
-   
-    <FAQs />
-    <DownloadApp />
+      <SearchBar />
+      <div className="container my-4">
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <h1>
+              {centers.length} medical centers available in{" "}
+              {city?.toLowerCase() || ""}
+            </h1>
+
+            {centers.length === 0 ? (
+              <p>
+                No medical centers found in {city}, {state}.
+              </p>
+            ) : (
+              <ul>
+                {centers.map((center) => (
+                  <li key={center.id}>
+                    <h3>{center["Hospital Name"]}</h3>
+                    <div>
+                      <HospitalCard data={center} />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </>
+        )}
+      </div>
+
+      <FAQs />
+      <DownloadApp />
     </>
   );
 };

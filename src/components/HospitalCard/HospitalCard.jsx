@@ -1,34 +1,47 @@
 import React from "react";
-import { Card, Button, Col } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import BookingModal from "../BookingModal/BookingModal";
 
 function HospitalCard({ data }) {
   const [show, setShow] = React.useState(false);
 
   return (
-    <Col md={4} sm={6} xs={12} lg={9} className="d-flex">
-      <Card className="my-3 flex-fill shadow-sm">
+    <>
+      {/* Make the entire card clickable with Bootstrap classes */}
+      <Card
+        className="my-3"
+        role="button"
+        tabIndex={0}
+        onClick={() => setShow(true)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") setShow(true);
+        }}
+        aria-label={`Book appointment at ${data["Hospital Name"]}`}
+        style={{ cursor: "pointer" }}
+      >
         <Card.Body>
-          <Card.Title className="fw-bold">{data["Hospital Name"]}</Card.Title>
-          <Card.Text className="text-muted">
-            {data.Address}, {data.City}, {data.State}, {data["ZIP Code"]}
-          </Card.Text>
+          <Card.Title>{data["Hospital Name"]}</Card.Title>
           <Card.Text>
-            <strong>Rating:</strong> {data["Overall Rating"] || "N/A"}
+            {data.Address}, {data.City}, {data.State}, {data["ZIP Code"]}
+            <br />
+            Rating: {data["Overall Rating"] || "N/A"}
           </Card.Text>
-          <Button variant="primary" onClick={() => setShow(true)} data-testid="book-visit-btn"> 
+
+          {/* Button with Bootstrap styling, prevent propagation */}
+          <Button
+            variant="primary"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShow(true);
+            }}
+          >
             Book FREE Center Visit
           </Button>
         </Card.Body>
       </Card>
 
-      {/* Booking Modal */}
-      <BookingModal
-        show={show}
-        onHide={() => setShow(false)}
-        center={data} data-testid="booking-modal"
-      />
-    </Col>
+      <BookingModal show={show} onHide={() => setShow(false)} center={data} />
+    </>
   );
 }
 
