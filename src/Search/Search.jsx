@@ -14,34 +14,27 @@ const Search = () => {
   const state = params.get("state");
   const city = params.get("city");
 
-  // useEffect(() => {
-  //   fetchMedicalCenters(state, city).then(data => {
-  //     setCenters(data);
-  //     setLoading(false);
-  //   });
-  // }, [state, city]);
-
-//   useEffect(() => {
-//   if (!state || !city) {
-//     setCenters([]);
-//     setLoading(false);
-//     return;
-//   }
-//   setLoading(true);
-//   fetchMedicalCenters(state, city).then(data => {
-//     setCenters(data);
-//     setLoading(false);
-//   });
-// }, [state, city]);
-
-useEffect(() => {
-  if (state && city) {
-    fetchMedicalCenters(state, city)
-      .then(data => setCenters(data))
-      .catch(console.error);
-      setLoading(false);
+  useEffect(() => {
+  if (!state || !city) {
+    setCenters([]);
+    setLoading(false);
+    return;
   }
+  setLoading(true);
+  fetchMedicalCenters(state, city).then(data => {
+    setCenters(data);
+    setLoading(false);
+  });
 }, [state, city]);
+
+// useEffect(() => {
+//   if (state && city) {
+//     fetchMedicalCenters(state, city)
+//       .then(data => setCenters(data))
+//       .catch(console.error);
+//       setLoading(false);
+//   }
+// }, [state, city]);
 
   return (
     <>

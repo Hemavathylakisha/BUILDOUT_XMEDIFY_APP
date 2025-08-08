@@ -1,24 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+
+const formatDate = (dateStr) => {
+  if (!dateStr) return "N/A";
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const d = new Date(dateStr);
+  return d.toLocaleDateString(undefined, options);
+};
 
 const MyBookings = () => {
-  const [bookings,setBookings] = useState([]);
-
-  useEffect(() => {
-  const saved = JSON.parse(localStorage.getItem("bookings")) || [];
-  setBookings(saved);
-}, []);
+  const bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
 
   return (
     <div className="container my-4">
       <h1>My Bookings</h1>
-      {bookings.length === 0 ? <p>No bookings yet.</p> : bookings.map((b, i) => (
-        <div key={i} className="border p-3 mb-3 rounded">
-          <h5>{b.center["Hospital Name"]}</h5>
-          <p>{b.center.Address}, {b.center.City}, {b.center.State}</p>
-          <p><strong>Date:</strong> {b.date}</p>
-          <p><strong>Time:</strong> {b.time}</p>
-        </div>
-      ))}
+      {bookings.length === 0 ? (
+        <p>No bookings yet.</p>
+      ) : (
+        bookings.map((b, i) => {
+          const center = b.center || b;
+          const bookingDate = formatDate(b.bookingDate || b.date);
+          const bookingTime = b.bookingTime || b.time || "N/A";
+
+          return (
+            <div key={i} className="border p-3 mb-3 rounded">
+              <h3>{center["Hospital Name"] || "Unknown Hospital"}</h3>
+              <p>
+                {center.Address || "No address"},{" "}
+                {center.City || "Unknown city"},{" "}
+                {center.State || "Unknown state"}
+              </p>
+              <p>
+                <strong>Date:</strong> {bookingDate}
+              </p>
+              <p>
+                <strong>Time:</strong> {bookingTime}
+              </p>
+            </div>
+          );
+        })
+      )}
     </div>
   );
 };
