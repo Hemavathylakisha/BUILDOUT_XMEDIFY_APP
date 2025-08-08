@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const formatDate = (dateStr) => {
   if (!dateStr) return "N/A";
@@ -8,7 +8,24 @@ const formatDate = (dateStr) => {
 };
 
 const MyBookings = () => {
-  const bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
+  const [bookings, setBookings] = useState([]);
+
+  useEffect(() => {
+    // Load bookings on mount
+    const saved = JSON.parse(localStorage.getItem("bookings") || "[]");
+    setBookings(saved);
+
+    // Listen for storage changes (optional for SPA updates)
+    const handleStorageChange = () => {
+      const updated = JSON.parse(localStorage.getItem("bookings") || "[]");
+      setBookings(updated);
+    };
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   return (
     <div className="container my-4">
