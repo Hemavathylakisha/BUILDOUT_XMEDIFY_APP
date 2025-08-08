@@ -14,17 +14,31 @@ const Search = () => {
   const state = params.get("state");
   const city = params.get("city");
 
+  // useEffect(() => {
+  //   fetchMedicalCenters(state, city).then(data => {
+  //     setCenters(data);
+  //     setLoading(false);
+  //   });
+  // }, [state, city]);
+
   useEffect(() => {
-    fetchMedicalCenters(state, city).then(data => {
-      setCenters(data);
-      setLoading(false);
-    });
-  }, [state, city]);
+  if (!state || !city) {
+    setCenters([]);
+    setLoading(false);
+    return;
+  }
+  setLoading(true);
+  fetchMedicalCenters(state, city).then(data => {
+    setCenters(data);
+    setLoading(false);
+  });
+}, [state, city]);
 
   return (
     <>
     <SearchBar />
-    <div className="row" data-testid="hospital-list">
+    
+    <div className="container" data-testid="hospital-list">
       {!loading && centers.length === 0 && (
   <p className="text-muted">No medical centers found for {city}, {state}.</p>
 )}
